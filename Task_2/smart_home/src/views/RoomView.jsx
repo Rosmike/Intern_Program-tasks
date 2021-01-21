@@ -113,6 +113,29 @@ export const RoomView = ({ rooms, setRooms }) => {
     setRooms(roomsToUpdate);
   };
 
+  const toggleDevice = (e, deviceObj, isActive) => {
+    //TODO: when device is the last to be turned off, turn off the room, else turn on the room
+    e.stopPropagation();
+
+    const roomsToUpdate = [...rooms];
+
+    const newDevice = {
+      ...deviceObj,
+      isActive: !isActive,
+    };
+
+    const roomToChangeIndex = roomsToUpdate.findIndex(
+      (item) => item.id === roomId
+    );
+    const deviceToChangeIndex = roomsToUpdate[
+      roomToChangeIndex
+    ].devices.findIndex((device) => device.id === deviceObj.id);
+
+    roomsToUpdate[roomToChangeIndex].devices[deviceToChangeIndex] = newDevice;
+
+    setRooms(roomsToUpdate);
+  };
+
   const removeDevice = () => {
     const roomsToFilter = [...rooms];
     const filtered = roomsToFilter.filter((room) => room.id !== roomId);
@@ -244,7 +267,13 @@ export const RoomView = ({ rooms, setRooms }) => {
                   }
                 }}
               >
-                <DeviceCard name={device.name} parameter={device.parameter} />
+                <DeviceCard
+                  device={device}
+                  isActive={device.isActive}
+                  toggleDevice={toggleDevice}
+                  name={device.name}
+                  parameter={device.parameter}
+                />
               </Box>
             </Grid>
           );

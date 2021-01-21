@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Typography from "@material-ui/core/Typography";
-import { CardContent, Grow } from "@material-ui/core";
+import {
+  Box,
+  CardContent,
+  Collapse,
+  Grid,
+  Grow,
+  Slider,
+  Switch,
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -22,21 +30,71 @@ const useStyles = makeStyles({
   },
 });
 
-export const DeviceCard = ({ name, parameter }) => {
+export const DeviceCard = ({
+  isActive,
+  device,
+  toggleDevice,
+  name,
+  parameter,
+}) => {
   const classes = useStyles();
+
+  const [showDetails, setShowDetails] = useState(false);
+
+  const valuetext = (value) => {
+    return `${value}°C`;
+  };
 
   return (
     <Grow in>
-      <Card onClick={() => {}} className={classes.root}>
-        <CardActionArea>
+      <Card className={classes.root}>
+        <CardActionArea
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowDetails(!showDetails);
+          }}
+        >
           <CardContent>
-            <Typography className={classes.title} gutterBottom>
-              {name}
-            </Typography>
-            <Typography className={classes.additionalInfo} gutterBottom>
-              {parameter.value} {parameter.name}
-            </Typography>
+            <Grid container>
+              <Grid item xs={6}>
+                <Typography className={classes.title} gutterBottom>
+                  {name}
+                </Typography>
+                <Typography className={classes.additionalInfo} gutterBottom>
+                  {parameter.value} {parameter.name}
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  height="100%"
+                >
+                  <Switch
+                    checked={isActive}
+                    onClick={(e) => toggleDevice(e, device, isActive)}
+                    name="editMode"
+                    inputProps={{ "aria-label": "secondary checkbox" }}
+                  />
+                </Box>
+              </Grid>
+            </Grid>
           </CardContent>
+          <Collapse in={showDetails}>
+            <Box mx={3}>
+              {/*// TODO: handle this slider functionally*/}
+              <Slider
+                defaultValue={50}
+                getAriaValueText={valuetext}
+                valueLabelDisplay="auto"
+                step={10}
+                marks
+                min={0}
+                max={100}
+              />
+            </Box>
+          </Collapse>
         </CardActionArea>
       </Card>
     </Grow>

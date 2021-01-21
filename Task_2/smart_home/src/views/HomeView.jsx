@@ -3,7 +3,7 @@ import { Avatar, Box, Fab, Grid, Tooltip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { RoomCard } from "../components/RoomCard";
 
-export const HomeView = ({ rooms, addRoom }) => {
+export const HomeView = ({ rooms, addRoom, toggleRoom }) => {
   return (
     <React.Fragment>
       <Avatar
@@ -33,14 +33,16 @@ export const HomeView = ({ rooms, addRoom }) => {
         </Tooltip>
       </Box>
       <Grid container>
-        {rooms.map(({ id, name, numberOfUsers, devices }) => {
+        {rooms.map(({ isActive, id, name, numberOfUsers, devices }) => {
           return (
             <Grid key={id} item xs={6} md={3} lg={2}>
               <RoomCard
                 id={id}
+                isActive={isActive}
                 name={name}
                 numberOfUsers={numberOfUsers}
                 devices={devices}
+                toggleRoom={toggleRoom}
               />
             </Grid>
           );

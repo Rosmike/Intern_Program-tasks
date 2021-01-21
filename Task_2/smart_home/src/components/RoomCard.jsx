@@ -24,23 +24,23 @@ const useStyles = makeStyles({
   },
 });
 
-export const RoomCard = ({ id, name, numberOfUsers, devices }) => {
+export const RoomCard = ({
+  id,
+  name,
+  numberOfUsers,
+  devices,
+  toggleRoom,
+  isActive,
+}) => {
   const classes = useStyles();
   const history = useHistory();
-  const [turnOffRoom, setTurnOffRoom] = useState(false);
 
-  const toggleTurnOffMode = () => {
-    setTurnOffRoom(!turnOffRoom);
-  };
-
-  const handleRoomTileClick = () => {
-    history.push(`/room/${id}`);
-  };
+  const handleRoomTileClick = () => history.push(`/room/${id}`);
 
   return (
     <Grow in>
-      <Card onClick={handleRoomTileClick} className={classes.root}>
-        <CardActionArea>
+      <Card className={classes.root}>
+        <CardActionArea onClick={(e) => handleRoomTileClick(e)}>
           <CardContent>
             <Typography className={classes.title} gutterBottom>
               {name}
@@ -51,17 +51,12 @@ export const RoomCard = ({ id, name, numberOfUsers, devices }) => {
             <Typography className={classes.additionalInfo} gutterBottom>
               {devices.length} {devices.length === 1 ? "device" : "devices"}
             </Typography>
-            <Box>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={turnOffRoom}
-                    onChange={toggleTurnOffMode}
-                    name="editMode"
-                    inputProps={{ "aria-label": "secondary checkbox" }}
-                  />
-                }
-                labelPlacement="start"
+            <Box display="flex" justifyContent="flex-end">
+              <Switch
+                checked={isActive}
+                onClick={(e) => toggleRoom(e, id, isActive)}
+                name="editMode"
+                inputProps={{ "aria-label": "secondary checkbox" }}
               />
             </Box>
           </CardContent>
