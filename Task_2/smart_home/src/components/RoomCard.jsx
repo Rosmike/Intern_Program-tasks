@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Typography from "@material-ui/core/Typography";
 import { CardContent, Grow, Switch, Box } from "@material-ui/core";
 import { useHistory } from "react-router";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const useStyles = makeStyles({
   root: {

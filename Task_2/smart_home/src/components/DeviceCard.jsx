@@ -36,6 +36,7 @@ export const DeviceCard = ({
   toggleDevice,
   name,
   parameter,
+  isEditMode,
 }) => {
   const classes = useStyles();
 
@@ -50,8 +51,10 @@ export const DeviceCard = ({
       <Card className={classes.root}>
         <CardActionArea
           onClick={(e) => {
-            e.stopPropagation();
-            setShowDetails(!showDetails);
+            if (!isEditMode) {
+              e.stopPropagation();
+              setShowDetails(!showDetails);
+            }
           }}
         >
           <CardContent>

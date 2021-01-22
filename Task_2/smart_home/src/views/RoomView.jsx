@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ArrowBack } from "@material-ui/icons";
 import { useParams } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
@@ -49,10 +49,6 @@ export const RoomView = ({ rooms, setRooms }) => {
   const [confirmDeviceDialogOpen, setConfirmDeviceDialogOpen] = useState(false);
   const [editItem, setEditItem] = useState(null);
   const [showAddDeviceDialog, setShowAddDeviceDialog] = useState(false);
-
-  useEffect(() => {
-    //
-  }, []);
 
   const toggleEditMode = () => {
     setIsEditMode(!isEditMode);
@@ -273,6 +269,7 @@ export const RoomView = ({ rooms, setRooms }) => {
                   toggleDevice={toggleDevice}
                   name={device.name}
                   parameter={device.parameter}
+                  isEditMode={isEditMode}
                 />
               </Box>
             </Grid>
